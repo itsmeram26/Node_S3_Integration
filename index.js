@@ -1,29 +1,13 @@
-const fs = require('fs');
-const AWS = require('aws-sdk');
+const listFilesS3 = require('./src/service/ListFiles');
+const createFilesS3 = require('./src/service/CreateFiles');
+const deleteFileS3 = require('./src/service/DeleteFile');
 
-const s3 = new AWS.S3({
-  accessKeyId: process.env.AWS_ACCESS_KEY,
-  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
-});
+createFilesS3.uploadFileInS3();
 
-const fileName = '';
-const bucketName = ''
+/* To list Objects in AWS S3
+listFilesS3.listS3Objects(); */
 
-const uploadFileInS3 = () => {
-  fs.readFile(fileName, (err, data) => {
-     if (err) throw err;
-     const params = {
-         Bucket: bucketName, 
-         Key: fileName,
-         Body: JSON.stringify(data, null, 2)
-     };
-     s3.upload(params, function(s3Err, data) {
-         if (s3Err) throw s3Err
-         console.log(`File uploaded successfully at ${data.Location}`)
-     });
-  });
-};
-
-uploadFileInS3();
+/* To delete a file from AWS S3
+deleteFileS3.deleteObjectFromS3(); */
 
 
